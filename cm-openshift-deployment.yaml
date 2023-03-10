@@ -5,7 +5,7 @@ metadata:
   name: cert-manager-openshift-routes
   namespace: openshift-cert-manager
   annotations:
-    argocd.argoproj.io/sync-wave: '5'
+    argocd.argoproj.io/sync-wave: '4'
   labels:
     app.kubernetes.io/name: cert-manager-openshift-routes
     app.kubernetes.io/version: '0.1.3'
