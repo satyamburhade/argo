@@ -2,7 +2,7 @@ apiVersion: operators.coreos.com/v1
 kind: OperatorGroup
 metadata:
   annotations:
-    argocd.argoproj.io/sync-wave: "1"
+    argocd.argoproj.io/sync-wave: '1'
   generateName: openshift-cert-manager-operator-
   name: openshift-cert-manager-operator-group
   namespace: openshift-cert-manager-operator
