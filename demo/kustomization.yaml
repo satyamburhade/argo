@@ -7,3 +7,17 @@ nameSuffix: -dev
 
 resources:
   - EgressFirewall.yaml
+
+patches:
+- target:
+    kind: EgressFirewall
+    name: default
+  options:
+    allowNameChange: true
+  patch: |-
+      - op: replace
+        path: /metadata/name
+        value: default
+      - op: replace
+        path: /metadata/labels/env
+        value: replace
