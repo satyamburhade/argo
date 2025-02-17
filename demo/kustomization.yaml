@@ -1,17 +1,13 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 
-namespace: default
-namePrefix: nobel-ms-
-nameSuffix: -dev
-
 resources:
   - EgressFirewall.yaml
 
 patches:
 - target:
     kind: EgressFirewall
-    name: nobel-ms-default-dev
+    name: default
   options:
     allowNameChange: true
   patch: |-
@@ -21,3 +17,11 @@ patches:
       - op: replace
         path: /metadata/labels/env
         value: replace
+
+
+namespace: default
+namePrefix: nobel-ms-
+nameSuffix: -dev
+
+resources:
+  - image.yaml
