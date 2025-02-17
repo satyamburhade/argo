@@ -11,7 +11,7 @@ resources:
 patches:
 - target:
     kind: EgressFirewall
-    name: default
+    name: nobel-ms-default-dev
   options:
     allowNameChange: true
   patch: |-
