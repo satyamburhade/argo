@@ -1,7 +1,7 @@
 apiVersion: k8s.ovn.org/v1
 kind: EgressFirewall
 metadata:
-labels:
+  labels:
     env: default
   name: default
   namespace: openshift-gitops
