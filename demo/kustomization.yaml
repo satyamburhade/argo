@@ -5,20 +5,29 @@ resources:
   - EgressFirewall.yaml
 
 patches:
-- target:
+  - target:
+      kind: EgressFirewall
+    patch: |
+      - op: add
+        path: /metadata/labels
+        value: {"forceName": "default"}
+
+
+replacements:
+- source:
+    group: k8s.ovn.org
+    version: v1
     kind: EgressFirewall
-    name: default
-  options:
-    allowNameChange: true
-  patch: |-
-      - op: replace
-        path: /metadata/name
-        value: default
-      - op: replace
-        path: /metadata/labels/env
-        value: replace
+    fieldPath: metadata.labels.forceName
+  targets:
+  - select:
+      group: k8s.ovn.org
+      version: v1
+      kind: EgressFirewall
+    fieldPaths:
+    - metadata.name
 
 
-namespace: default
+namespace: openshift-gitops
 namePrefix: nobel-ms-
 nameSuffix: -dev
