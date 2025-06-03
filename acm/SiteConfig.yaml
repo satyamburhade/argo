@@ -1,0 +1,17 @@
+apiVersion: ran.openshift.io/v1
+kind: SiteConfig
+metadata:
+  name: "site1-sno-du"
+  namespace: "site1-sno-du"
+spec:
+  baseDomain: "example.com"
+  pullSecretRef:
+    name: "assisted-deployment-pull-secret"
+  clusterImageSetNameRef: "openshift-4.18"
+  sshPublicKey: "<ssh_public_key>"
+  clusters:
+- clusterName: "site1-sno-du"
+  extraManifests:
+    filter:
+      exclude:
+        - 03-sctp-machine-config-worker.yaml
