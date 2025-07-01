@@ -5,8 +5,4 @@ metadata:
     env: default
   name: default
   namespace: openshift-gitops
-spec:
-  egress:
-    - to:
-        cidrSelector: 0.0.0.0/0
-      type: Deny
+spec: {}
