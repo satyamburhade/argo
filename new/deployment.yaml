@@ -16,15 +16,6 @@ spec:
       maxSurge: 25%
       maxUnavailable: 25%
     type: RollingUpdate
-  template:
-    metadata:
-      annotations:
-        config/checksum: 4feaed273ba2386d8df3172352e96ef8221c575c
-        proxy.istio.io/config: >-
-          { "holdApplicationUntilProxyStarts": true, "terminationDrainDuration":
-          "20s" }
-        sidecar.istio.io/inject: 'true'
-        traffic.sidecar.istio.io/excludeInboundPorts: '4040'
     spec:
       containers:
         - env:
