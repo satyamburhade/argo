@@ -1,0 +1,50 @@
+apiVersion: networking.istio.io/v1beta1
+kind: VirtualService
+metadata:
+  annotations:
+    argocd.argoproj.io/sync-wave: '10'
+  labels:
+    service: b-pms-v1-vaultmanagement
+  name: b-pms-v1-vaultmanagement
+spec:
+  gateways:
+    - mesh
+    - istio-ingress/gw-dev
+  hosts:
+    - b-pms-v1-vaultmanagement.es-lra-dev.svc.cluster.local
+    - arqlra.dev.lra.work.es.nextgen.igrupobbva
+  http:
+    - match:
+        - authority:
+            prefix: arqlra.dev.lra.work.es.nextgen.igrupobbva
+          port: 80
+          uri:
+            prefix: /b.pms.v1.VaultManagement/
+        - authority:
+            prefix: arqlra.dev.lra.work.es.nextgen.igrupobbva
+          port: 443
+          uri:
+            prefix: /b.pms.v1.VaultManagement/
+        - authority:
+            prefix: b-pms-v1-VaultManagement
+          port: 50051
+          uri:
+            prefix: /b.pms.v1.VaultManagement/
+      name: distributed-weight
+      retries:
+        attempts: 0
+      route:
+        - destination:
+            host: b-pms-v1-vaultmanagement.es-lra-dev.svc.cluster.local
+            port:
+              number: 50051
+            subset: b-pms-v1-vaultmanagement-c318f2a5e
+          weight: 100
+      timeout: 20s
+    - route:
+        - destination:
+            host: b-pms-v1-vaultmanagement.es-lra-dev.svc.cluster.local
+            port:
+              number: 50051
+            subset: b-pms-v1-vaultmanagement-c318f2a5e
+          weight: 100
