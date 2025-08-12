@@ -33,8 +33,7 @@ spec:
           envFrom:
             - configMapRef:
                 name: b-pms-v1-vaultmanagement-c318f2a5e
-          image: >-
-            gl-lra-services-docker-local.registry.live.es.nextgen.igrupobbva/services/java/1-10-3/glo/b-pms-v1-vaultmanagement/c318f2a5e:9913bfca8
+          image: quay.io/siamaksade/spring-petclinic:latest
           imagePullPolicy: IfNotPresent
           lifecycle:
             preStop:
