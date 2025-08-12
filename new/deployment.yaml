@@ -97,7 +97,7 @@ spec:
                 - '-service'
                 - liveness
             failureThreshold: 6
-            periodSeconds: 3
+            periodSeconds: 30
             successThreshold: 1
             timeoutSeconds: 3
           name: b-pms-v1-vaultmanagement-c318f2a5e
@@ -120,7 +120,7 @@ spec:
                 - '-service'
                 - readiness
             failureThreshold: 3
-            periodSeconds: 2
+            periodSeconds: 30
             successThreshold: 1
             timeoutSeconds: 1
           resources:
@@ -163,24 +163,3 @@ spec:
       serviceAccount: pms.vault
       serviceAccountName: pms.vault
       terminationGracePeriodSeconds: 30
-status:
-  availableReplicas: 1
-  conditions:
-    - lastTransitionTime: '2025-08-06T10:28:19Z'
-      lastUpdateTime: '2025-08-06T10:28:19Z'
-      message: Deployment has minimum availability.
-      reason: MinimumReplicasAvailable
-      status: 'True'
-      type: Available
-    - lastTransitionTime: '2025-08-06T11:22:37Z'
-      lastUpdateTime: '2025-08-06T11:22:37Z'
-      message: >-
-        ReplicaSet "b-pms-v1-vaultmanagement-c318f2a5e-ffc99576d" has
-        successfully progressed.
-      reason: NewReplicaSetAvailable
-      status: 'True'
-      type: Progressing
-  observedGeneration: 2
-  readyReplicas: 1
-  replicas: 1
-  updatedReplicas: 1
