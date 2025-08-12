@@ -27,7 +27,7 @@ spec:
       containers:
         - image: image-registry.openshift-image-registry.svc:5000/openshift/httpd
           ports:
-          - containerPort: 8080
+          - containerPort: 80
           imagePullPolicy: IfNotPresent
           lifecycle:
             preStop:
@@ -40,9 +40,8 @@ spec:
                     while [ $(netstat -plunt | grep tcp | grep -v envoy | grep
                     -v pilot-agent | wc -l | xargs) -ne 0 ]; do sleep 1; done
           livenessProbe:
-            httpGet: # <--- Handler type specified here
-              path: /healthz
-              port: 8080
+            tcpSocket: # <--- Handler type specified here
+              port: 80
             failureThreshold: 6
             periodSeconds: 300
             successThreshold: 1
@@ -56,9 +55,8 @@ spec:
               name: metrics
               protocol: TCP
           readinessProbe:
-            httpGet: # <--- Handler type specified here
-              path: /ready
-              port: 8080
+            tcpSocket: # <--- Handler type specified here
+              port: 80
             failureThreshold: 3
             periodSeconds: 300
             successThreshold: 1
@@ -71,9 +69,8 @@ spec:
               cpu: 100m
               memory: 512M
           startupProbe:
-            httpGet: # <--- Handler type specified here
-              path: /healthz
-              port: 8080
+            tcpSocket:
+              port: 80
             failureThreshold: 3
             initialDelaySeconds: 20
             periodSeconds: 17
