@@ -52,17 +52,6 @@ spec:
         site: work-01
         version: b-pms-v1-vaultmanagement-c318f2a5e
     spec:
-      affinity:
-        podAntiAffinity:
-          preferredDuringSchedulingIgnoredDuringExecution:
-            - podAffinityTerm:
-                labelSelector:
-                  matchLabels:
-                    version: b-pms-v1-vaultmanagement-c318f2a5e
-                namespaces:
-                  - es-lra-dev
-                topologyKey: topology.kubernetes.io/zone
-              weight: 100
       containers:
         - env:
             - name: eae_rhomega_namespace
