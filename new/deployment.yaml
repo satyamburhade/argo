@@ -40,7 +40,6 @@ spec:
           livenessProbe:
             exec:
               command:
-                - /lra/grpc_health
                 - '-addr=0.0.0.0:50051'
                 - '-connect-timeout'
                 - 1s
@@ -63,7 +62,6 @@ spec:
           readinessProbe:
             exec:
               command:
-                - /lra/grpc_health
                 - '-addr=0.0.0.0:50051'
                 - '-connect-timeout'
                 - 1s
@@ -85,7 +83,6 @@ spec:
           startupProbe:
             exec:
               command:
-                - /lra/grpc_health
                 - '-addr=0.0.0.0:50051'
                 - '-connect-timeout'
                 - 5s
