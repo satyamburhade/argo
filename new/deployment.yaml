@@ -8,7 +8,7 @@ metadata:
     serviceVersion: b-pms-v1-vaultmanagement-c318f2a5e
   name: b-pms-v1-vaultmanagement-c318f2a5e
 spec:
-  progressDeadlineSeconds: 1300
+  #progressDeadlineSeconds: 1300
   replicas: 1
   revisionHistoryLimit: 0
   selector:
