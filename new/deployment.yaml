@@ -1,0 +1,189 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+  labels:
+    lra_chart: lra_kubernetes-0.10.7
+    service: b-pms-v1-vaultmanagement
+    serviceVersion: b-pms-v1-vaultmanagement-c318f2a5e
+  name: b-pms-v1-vaultmanagement-c318f2a5e
+  namespace: es-lra-dev
+  resourceVersion: '99620192'
+  uid: 41e6bce6-d454-41b3-a8b5-c7099ff63a6c
+spec:
+  progressDeadlineSeconds: 30
+  replicas: 1
+  revisionHistoryLimit: 0
+  selector:
+    matchLabels:
+      app: b-pms-v1-vaultmanagement
+      version: b-pms-v1-vaultmanagement-c318f2a5e
+  strategy:
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+    type: RollingUpdate
+  template:
+    metadata:
+      annotations:
+        config/checksum: 4feaed273ba2386d8df3172352e96ef8221c575c
+        proxy.istio.io/config: >-
+          { "holdApplicationUntilProxyStarts": true, "terminationDrainDuration":
+          "20s" }
+        sidecar.istio.io/inject: 'true'
+        traffic.sidecar.istio.io/excludeInboundPorts: '4040'
+      creationTimestamp: null
+      labels:
+        app: b-pms-v1-vaultmanagement
+        env: dev
+        lra.bbva.com/serviceGroup: pms.vault
+        lra_arch_version: 1-10-3
+        lra_full_service_name: b-pms-v1-VaultManagement
+        lra_service_application: pms
+        lra_service_commit: 9913bfca82af68bd19aa206c9bc7e65eedf0b5fb
+        lra_service_major_version: v1
+        lra_service_name: VaultManagement
+        lra_service_security_domain: pms.vault
+        lra_service_type: business
+        lra_service_uuaa: PMSV
+        lra_service_version: c318f2a5e
+        paas.bbva.com/containerMetricsEnabled: 'true'
+        semaas/metricset_id: lra_k8s_metrics
+        semaas/monitoredresource_id: b-pms-v1-VaultManagement
+        semaas/namespace: es.lra
+        serviceconfig.pms-vault-config-0-10/commit: db1bde4437db777a882cea626e43bc972d8e357a
+        site: work-01
+        version: b-pms-v1-vaultmanagement-c318f2a5e
+    spec:
+      affinity:
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+            - podAffinityTerm:
+                labelSelector:
+                  matchLabels:
+                    version: b-pms-v1-vaultmanagement-c318f2a5e
+                namespaces:
+                  - es-lra-dev
+                topologyKey: topology.kubernetes.io/zone
+              weight: 100
+      containers:
+        - env:
+            - name: eae_rhomega_namespace
+              value: es.lra
+            - name: eae_monitoredresource
+              value: b-pms-v1-VaultManagement
+          envFrom:
+            - configMapRef:
+                name: b-pms-v1-vaultmanagement-c318f2a5e
+          image: >-
+            gl-lra-services-docker-local.registry.live.es.nextgen.igrupobbva/services/java/1-10-3/glo/b-pms-v1-vaultmanagement/c318f2a5e:9913bfca8
+          imagePullPolicy: IfNotPresent
+          lifecycle:
+            preStop:
+              exec:
+                command:
+                  - /bin/sh
+                  - '-c'
+                  - >-
+                    curl -X POST localhost:15000/drain_listeners?inboundonly;
+                    while [ $(netstat -plunt | grep tcp | grep -v envoy | grep
+                    -v pilot-agent | wc -l | xargs) -ne 0 ]; do sleep 1; done
+          livenessProbe:
+            exec:
+              command:
+                - /lra/grpc_health
+                - '-addr=0.0.0.0:50051'
+                - '-connect-timeout'
+                - 1s
+                - '-rpc-timeout'
+                - 3000ms
+                - '-service'
+                - liveness
+            failureThreshold: 6
+            periodSeconds: 3
+            successThreshold: 1
+            timeoutSeconds: 3
+          name: b-pms-v1-vaultmanagement-c318f2a5e
+          ports:
+            - containerPort: 50051
+              name: grpc
+              protocol: TCP
+            - containerPort: 4040
+              name: metrics
+              protocol: TCP
+          readinessProbe:
+            exec:
+              command:
+                - /lra/grpc_health
+                - '-addr=0.0.0.0:50051'
+                - '-connect-timeout'
+                - 1s
+                - '-rpc-timeout'
+                - 3000ms
+                - '-service'
+                - readiness
+            failureThreshold: 3
+            periodSeconds: 2
+            successThreshold: 1
+            timeoutSeconds: 1
+          resources:
+            limits:
+              cpu: 250m
+              memory: 512M
+            requests:
+              cpu: 100m
+              memory: 512M
+          startupProbe:
+            exec:
+              command:
+                - /lra/grpc_health
+                - '-addr=0.0.0.0:50051'
+                - '-connect-timeout'
+                - 5s
+                - '-rpc-timeout'
+                - 12000ms
+                - '-rpc-header'
+                - lra-health-probe:startup
+                - '-rpc-header'
+                - x-rho-caller-id:K8s
+                - '-rpc-header'
+                - x-rho-caller-id2:Startup
+                - '-rpc-header'
+                - x-rho-caller-runtime:LRA
+                - '-service'
+                - startup
+            failureThreshold: 3
+            initialDelaySeconds: 20
+            periodSeconds: 17
+            successThreshold: 1
+            timeoutSeconds: 17
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext: {}
+      serviceAccount: pms.vault
+      serviceAccountName: pms.vault
+      terminationGracePeriodSeconds: 30
+status:
+  availableReplicas: 1
+  conditions:
+    - lastTransitionTime: '2025-08-06T10:28:19Z'
+      lastUpdateTime: '2025-08-06T10:28:19Z'
+      message: Deployment has minimum availability.
+      reason: MinimumReplicasAvailable
+      status: 'True'
+      type: Available
+    - lastTransitionTime: '2025-08-06T11:22:37Z'
+      lastUpdateTime: '2025-08-06T11:22:37Z'
+      message: >-
+        ReplicaSet "b-pms-v1-vaultmanagement-c318f2a5e-ffc99576d" has
+        successfully progressed.
+      reason: NewReplicaSetAvailable
+      status: 'True'
+      type: Progressing
+  observedGeneration: 2
+  readyReplicas: 1
+  replicas: 1
+  updatedReplicas: 1
