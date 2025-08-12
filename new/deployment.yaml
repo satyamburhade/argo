@@ -26,6 +26,8 @@ spec:
     spec:
       containers:
         - image: quay.io/siamaksade/spring-petclinic:latest
+          ports:
+          - containerPort: 8080
           imagePullPolicy: IfNotPresent
           lifecycle:
             preStop:
