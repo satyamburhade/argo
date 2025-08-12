@@ -8,12 +8,12 @@ metadata:
     serviceVersion: b-pms-v1-vaultmanagement-c318f2a5e
   name: b-pms-v1-vaultmanagement-c318f2a5e
 spec:
-  #progressDeadlineSeconds: 1300
+  progressDeadlineSeconds: 1300
   replicas: 1
   revisionHistoryLimit: 0
   selector:
     matchLabels:
-      app: b-pms-v1-vaultmanagement
+      app: b-pms-v1-vaultmanagemen
       version: b-pms-v1-vaultmanagement-c318f2a5e
   strategy:
     rollingUpdate:
@@ -97,9 +97,9 @@ spec:
                 - '-service'
                 - liveness
             failureThreshold: 6
-            periodSeconds: 30
+            periodSeconds: 300
             successThreshold: 1
-            timeoutSeconds: 3
+            timeoutSeconds: 300
           name: b-pms-v1-vaultmanagement-c318f2a5e
           ports:
             - containerPort: 50051
@@ -120,9 +120,9 @@ spec:
                 - '-service'
                 - readiness
             failureThreshold: 3
-            periodSeconds: 30
+            periodSeconds: 300
             successThreshold: 1
-            timeoutSeconds: 1
+            timeoutSeconds: 300
           resources:
             limits:
               cpu: 250m
