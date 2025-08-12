@@ -23,6 +23,7 @@ spec:
       maxSurge: 25%
       maxUnavailable: 25%
     type: RollingUpdate
+  template:
     spec:
       containers:
         - env:
