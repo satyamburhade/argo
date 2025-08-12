@@ -29,28 +29,6 @@ spec:
           "20s" }
         sidecar.istio.io/inject: 'true'
         traffic.sidecar.istio.io/excludeInboundPorts: '4040'
-      creationTimestamp: null
-      labels:
-        app: b-pms-v1-vaultmanagement
-        env: dev
-        lra.bbva.com/serviceGroup: pms.vault
-        lra_arch_version: 1-10-3
-        lra_full_service_name: b-pms-v1-VaultManagement
-        lra_service_application: pms
-        lra_service_commit: 9913bfca82af68bd19aa206c9bc7e65eedf0b5fb
-        lra_service_major_version: v1
-        lra_service_name: VaultManagement
-        lra_service_security_domain: pms.vault
-        lra_service_type: business
-        lra_service_uuaa: PMSV
-        lra_service_version: c318f2a5e
-        paas.bbva.com/containerMetricsEnabled: 'true'
-        semaas/metricset_id: lra_k8s_metrics
-        semaas/monitoredresource_id: b-pms-v1-VaultManagement
-        semaas/namespace: es.lra
-        serviceconfig.pms-vault-config-0-10/commit: db1bde4437db777a882cea626e43bc972d8e357a
-        site: work-01
-        version: b-pms-v1-vaultmanagement-c318f2a5e
     spec:
       containers:
         - env:
