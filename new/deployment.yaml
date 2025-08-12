@@ -8,6 +8,13 @@ metadata:
     serviceVersion: b-pms-v1-vaultmanagement-c318f2a5e
   name: b-pms-v1-vaultmanagement-c318f2a5e
 spec:
+  selector:
+    matchLabels:
+      app: name
+  template:
+    metadata:
+      labels:
+        app: name
   progressDeadlineSeconds: 1300
   replicas: 1
   revisionHistoryLimit: 0
