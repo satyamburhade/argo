@@ -11,10 +11,6 @@ spec:
   progressDeadlineSeconds: 1300
   replicas: 1
   revisionHistoryLimit: 0
-  selector:
-    matchLabels:
-      app: b-pms-v1-vaultmanagemen
-      version: b-pms-v1-vaultmanagement-c318f2a5e
   strategy:
     rollingUpdate:
       maxSurge: 25%
