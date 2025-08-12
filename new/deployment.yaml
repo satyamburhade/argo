@@ -40,7 +40,6 @@ spec:
           livenessProbe:
             exec:
               command:
-                - '-addr=0.0.0.0:50051'
                 - '-connect-timeout'
                 - 1s
                 - '-rpc-timeout'
@@ -62,7 +61,6 @@ spec:
           readinessProbe:
             exec:
               command:
-                - '-addr=0.0.0.0:50051'
                 - '-connect-timeout'
                 - 1s
                 - '-rpc-timeout'
@@ -83,7 +81,6 @@ spec:
           startupProbe:
             exec:
               command:
-                - '-addr=0.0.0.0:50051'
                 - '-connect-timeout'
                 - 5s
                 - '-rpc-timeout'
