@@ -38,14 +38,6 @@ spec:
                     while [ $(netstat -plunt | grep tcp | grep -v envoy | grep
                     -v pilot-agent | wc -l | xargs) -ne 0 ]; do sleep 1; done
           livenessProbe:
-            exec:
-              command:
-                - '-connect-timeout'
-                - 1s
-                - '-rpc-timeout'
-                - 3000ms
-                - '-service'
-                - liveness
             failureThreshold: 6
             periodSeconds: 300
             successThreshold: 1
@@ -59,14 +51,6 @@ spec:
               name: metrics
               protocol: TCP
           readinessProbe:
-            exec:
-              command:
-                - '-connect-timeout'
-                - 1s
-                - '-rpc-timeout'
-                - 3000ms
-                - '-service'
-                - readiness
             failureThreshold: 3
             periodSeconds: 300
             successThreshold: 1
@@ -79,22 +63,6 @@ spec:
               cpu: 100m
               memory: 512M
           startupProbe:
-            exec:
-              command:
-                - '-connect-timeout'
-                - 5s
-                - '-rpc-timeout'
-                - 12000ms
-                - '-rpc-header'
-                - lra-health-probe:startup
-                - '-rpc-header'
-                - x-rho-caller-id:K8s
-                - '-rpc-header'
-                - x-rho-caller-id2:Startup
-                - '-rpc-header'
-                - x-rho-caller-runtime:LRA
-                - '-service'
-                - startup
             failureThreshold: 3
             initialDelaySeconds: 20
             periodSeconds: 17
