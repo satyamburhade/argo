@@ -4,7 +4,7 @@ kind: Kustomization
 resources:
   - operatorgroup.yaml
   - subscription.yaml
-  - cluster.yaml
+  #- cluster.yaml
   - cm-openshift-deployment.yaml
   - cm-openshift-routes-clusterrole.yaml
   - cm-openshift-routes-crb.yaml
